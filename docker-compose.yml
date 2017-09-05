@@ -1,0 +1,13 @@
+justcms-mariadb:
+  image: mariadb
+  container_name: justcms-mariadb
+  ports:
+    - "3306:3306"
+  volumes:
+    - ./.mysqldata:/var/lib/mysql
+  environment:
+    - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    - MYSQL_DATABASE=just
+    - MYSQL_USER=just
+    - MYSQL_PASSWORD=just
+    - TZ=America/Sao_Paulo
