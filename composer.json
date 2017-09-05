@@ -1,0 +1,17 @@
+{
+    "name": "dave/desafio-just-cms",
+    "description": "Micro CMS desenvolvido para o desafio Just Digital",
+    "type": "project",
+    "authors": [
+        {
+            "name": "David Lima",
+            "email": "dave@blogdodave.com.br"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}
