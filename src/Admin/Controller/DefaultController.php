@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 
+use Library\Auth;
 use \Library\Controller;
 
 /**
@@ -10,6 +11,18 @@ use \Library\Controller;
  */
 class DefaultController extends Controller
 {
+
+    /**
+     * Prevents non-authenticated users to access restrict area
+     */
+    public function __construct()
+    {
+        if (! Auth::isAuthenticated()) {
+            header('Location: /admin/auth/');
+            exit();
+        }
+    }
+
     public function indexAction()
     {
         $this->renderView('Admin/View/index.phtml', [

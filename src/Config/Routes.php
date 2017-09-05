@@ -20,6 +20,19 @@ $routes = [
         'module' => 'Admin',
         'controller' => 'Default',
         'action' => 'index'
+    ],
+    [
+        'name' => 'admin-auth',
+        'route' => '/admin/auth/',
+        'module' => 'Admin',
+        'controller' => 'Security',
+        'action' => 'auth'
+    ], [
+        'name' => 'admin-logout',
+        'route' => '/admin/logout/',
+        'module' => 'Admin',
+        'controller' => 'Security',
+        'action' => 'logout'
     ]
 ];
 

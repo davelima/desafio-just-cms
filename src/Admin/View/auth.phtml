@@ -1,0 +1,10 @@
+<form method="POST">
+    <?php
+    if (isset($error)) {
+        echo $error;
+    }
+    ?>
+    <input type="text" name="login" placeholder="login">
+    <input type="password" name="password" placeholder="Password">
+    <button type="submit">Login</button>
+</form>
