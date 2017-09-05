@@ -24,6 +24,13 @@ class Router
     public static $matchingRoute = null;
 
     /**
+     * GET params
+     *
+     * @var array
+     */
+    public static $params = [];
+
+    /**
      * Register a route
      *
      * @param array $route
@@ -52,6 +59,11 @@ class Router
             if (preg_match($route['route'], $requestedRoute, $matches)) {
                 self::$matchingRoute = $route;
 
+                if (isset($route['params']) && $route['params']) {
+                    array_shift($matches);
+                    self::$params = array_combine($route['params'], $matches);
+                }
+
                 $module = $route['module'];
 
                 $controllerName = $route['controller'];
@@ -60,6 +72,13 @@ class Router
 
                 $controller = new $controller();
                 $controller->module = $module;
+
+                if (self::$params) {
+                    foreach (self::$params as $key => $val) {
+                        $controller->setParam($key, $val);
+                    }
+                }
+
                 $controller->$action();
 
                 return;
