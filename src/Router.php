@@ -59,6 +59,7 @@ class Router
                 $action = $route['action'] . 'Action';
 
                 $controller = new $controller();
+                $controller->module = $module;
                 $controller->$action();
 
                 return;

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><?php echo $title;?></title>
+</head>
+<body>
+<?php
+if (file_exists($view)) {
+    require_once($view);
+}
+?>
+</body>
+</html>
