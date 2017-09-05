@@ -1,0 +1,15 @@
+<form method="post">
+    <?php
+    if (isset($result)) {
+        echo "<p>{$result}</p>";
+    }
+    ?>
+    <input type="text" name="title" placeholder="Título"
+           value="<?php echo isset($post) ? $post->title : '';?>" required>
+    <input type="text" name="slug" placeholder="URL"
+           value="<?php echo isset($post) ? $post->slug : ''?>"
+        <?php echo isset($post) ? ' required' : ''?>>
+    <textarea name="body" placeholder="Conteúdo" required><?php echo isset($post) ? $post->body : '';?></textarea>
+
+    <button type="submit"><?php echo isset($post) ? 'Atualizar' : 'Publicar';?></button>
+</form>
