@@ -68,6 +68,16 @@ $routes = [
         'module' => 'Admin',
         'controller' => 'Posts',
         'action' => 'delete'
+    ],
+    [
+        'name' => 'front-read-post',
+        'route' => '/noticias/(.*?)/',
+        'params' => [
+            'slug'
+        ],
+        'module' => 'Front',
+        'controller' => 'Posts',
+        'action' => 'read'
     ]
 ];
 

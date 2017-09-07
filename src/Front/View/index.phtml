@@ -1,2 +1,14 @@
-<?php
-echo $title;
+<h1>Posts</h1>
+<ul class="list-group">
+    <?php
+    foreach ($posts as $post) {
+    ?>
+    <li>
+        <a href="/noticias/<?php echo $post->getSlug();?>/">
+            <?php echo $post->getTitle();?>
+        </a>
+    </li>
+    <?php
+    }
+    ?>
+</ul>
