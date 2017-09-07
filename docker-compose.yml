@@ -11,3 +11,24 @@ justcms-mariadb:
     - MYSQL_USER=just
     - MYSQL_PASSWORD=just
     - TZ=America/Sao_Paulo
+
+justcms-nginx:
+  image: davelima/nginx
+  container_name: justcms-nginx
+  ports:
+    - "80:80"
+  volumes:
+    - ./src/Config/nginx/:/etc/nginx/sites-enabled/
+    - .:/var/www/
+  links:
+    - justcms-php7
+
+justcms-php7:
+  image: lagun4ik/php7-fpm
+  container_name: justcms-php7
+  ports:
+    - "9000:9000"
+  links:
+    - justcms-mariadb
+  volumes:
+    - .:/var/www/

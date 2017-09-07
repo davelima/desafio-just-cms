@@ -4,7 +4,7 @@
  */
 
 return [
-    'host' => '127.0.0.1',
+    'host' => 'justcms-mariadb',
     'driver' => 'mysql',
     'username' => 'just',
     'password' => 'just',

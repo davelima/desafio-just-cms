@@ -40,7 +40,7 @@ class SecurityController extends Controller
             'title' => 'Admin :: Login'
         ];
 
-        if ($error) {
+        if (isset($error) && $error) {
             $params['error'] = $error;
         }
 
