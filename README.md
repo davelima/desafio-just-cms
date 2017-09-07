@@ -7,7 +7,7 @@ Para rodar o projeto:
 ```
 composer dump-autoload # Criará o arquivo de autoload do Composer
 docker-compose up -d # Criará 3 containers: justcms-php7, justcms-nginx e justcms-mariadb
-docker exec -i mysql -ujust -pjust just < Sql/database.sql # Importará o usuário padrão do sistema e publicações de exemplo
+docker exec -i justcms-mariadb mysql -ujust -pjust just < Sql/database.sql # Importará o usuário padrão do sistema e publicações de exemplo
 ```
 
 Após isso, o site poderá ser acessado via `http://localhost` e
