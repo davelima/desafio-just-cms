@@ -18,10 +18,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Just CMS</a>
+                <a class="navbar-brand" href="/admin/">Just CMS</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <?php
+                if (\Library\Auth::isAuthenticated()) {
+                ?>
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
@@ -29,15 +32,18 @@
                         > Posts<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Criar novo</a></li>
-                            <li><a href="#">Listar</a></li>
+                            <li><a href="/admin/posts/create/">Criar novo</a></li>
+                            <li><a href="/admin/posts/list/">Listar</a></li>
                         </ul>
                     </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Sair</a></li>
+                    <li><a href="/admin/logout/">Sair</a></li>
                 </ul>
+                <?php
+                }
+                ?>
 
             </div>
         </div>

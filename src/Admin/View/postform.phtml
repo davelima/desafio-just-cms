@@ -1,15 +1,45 @@
-<form method="post">
-    <?php
-    if (isset($result)) {
-        echo "<p>{$result}</p>";
-    }
-    ?>
-    <input type="text" name="title" placeholder="Título"
-           value="<?php echo isset($post) ? $post->title : '';?>" required>
-    <input type="text" name="slug" placeholder="URL"
-           value="<?php echo isset($post) ? $post->slug : ''?>"
-        <?php echo isset($post) ? ' required' : ''?>>
-    <textarea name="body" placeholder="Conteúdo" required><?php echo isset($post) ? $post->body : '';?></textarea>
+<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+    <h1><?php echo isset($post) ? 'Editar' : 'Criar';?> post</h1>
+    <form method="post">
+        <?php
+        if (isset($result)) {
+            $resultClass = ($error ? 'danger': 'success');
+            echo "<div class='alert alert-{$resultClass}'>{$result}</div>";
+        }
+        ?>
+        <div class="form-group">
+            <input type="text" name="title" placeholder="Título" class="form-control"
+                   value="<?php echo isset($post) ? $post->title : '';?>" required>
+        </div>
+        <div class="form-group">
+            <input type="text" name="slug" placeholder="URL" class="form-control"
+                   value="<?php echo isset($post) ? $post->slug : ''?>"
+                <?php echo isset($post) ? ' required' : ''?>>
+        </div>
 
-    <button type="submit"><?php echo isset($post) ? 'Atualizar' : 'Publicar';?></button>
-</form>
+        <div class="form-group">
+            <textarea name="body" placeholder="Conteúdo" class="form-control" required><?php echo isset($post) ? $post->body : '';?></textarea>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-info">
+                <?php echo isset($post) ? 'Atualizar' : 'Publicar';?>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script src="/web/plugins/tinymce/tinymce.min.js"></script>
+<script>
+    window.onload = function() {
+        tinymce.init({
+            selector: 'textarea',
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            },
+            height: 300
+        });
+    }
+</script>

@@ -65,6 +65,7 @@ class PostsController extends Controller
             } catch (\Exception $e) {
                 $params['result'] = 'Erro ao publicar post: ' . $e->getMessage();
                 $params['error'] = true;
+                $params['post'] = $post;
             }
         }
 
@@ -110,6 +111,7 @@ class PostsController extends Controller
 
                 $params['result'] = 'Post atualizado com sucesso!';
                 $params['error'] = false;
+                $params['post'] = $post;
             } catch (\Exception $e) {
                 $params['result'] = 'Erro ao atualizar post: ' . $e->getMessage();
                 $params['error'] = true;

@@ -3,12 +3,37 @@
 <head>
     <meta charset="utf-8">
     <title><?php echo $title;?></title>
+    <link rel="stylesheet" href="/web/assets/dist/css/default.css">
+    <link rel="stylesheet" href="/web/assets/bower/bootstrap/dist/css/bootstrap.css">
+    <script src="/web/assets/bower/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Just</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/admin/">Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 <?php
 if (file_exists($view)) {
     require_once($view);
 }
 ?>
+</div>
+<script src="/web/assets/bower/bootstrap/dist/js/bootstrap.js"></script>
 </body>
 </html>

@@ -23,9 +23,12 @@ class PostsController extends Controller
             throw new \Exception('Post not found');
         }
 
+        $allPosts = $post->getPosts();
+
         $this->renderView('Front/View/readpost.phtml', [
             'title' => 'Front :: Bem vindo',
-            'post' => $post
+            'post' => $post,
+            'posts' => $allPosts
         ]);
     }
 }

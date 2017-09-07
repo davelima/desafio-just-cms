@@ -1,14 +1,20 @@
 <h1>Posts</h1>
-<ul class="list-group">
+<div class="row">
     <?php
     foreach ($posts as $post) {
     ?>
-    <li>
-        <a href="/noticias/<?php echo $post->getSlug();?>/">
-            <?php echo $post->getTitle();?>
-        </a>
-    </li>
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2><?php echo $post->getTitle();?></h2>
+                <p>
+                    <?php echo substr(strip_tags($post->getTitle()), 0, 100);?>...
+                    <a href="/noticias/<?php echo $post->getSlug();?>/">Leia mais</a>
+                </p>
+            </div>
+        </div>
+    </div>
     <?php
     }
     ?>
-</ul>
+</div>
