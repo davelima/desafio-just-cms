@@ -29,7 +29,6 @@ mais simples possível e não deve ser utilizado em produção.
 
 Bibliotecas/plugins de terceiros utilizados:
 - Composer
-- Bower
-    - Bootstrap 3
-        - jQuery
-- TinyMCE
+- Bootstrap 3 (CDN)
+    - jQuery (CDN)
+- TinyMCE (CDN)
