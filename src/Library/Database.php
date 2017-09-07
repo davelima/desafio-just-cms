@@ -1,6 +1,7 @@
 <?php
 
 namespace Library;
+use Library\Model;
 
 /**
  * Basic database wrapper (CRUD)
@@ -45,7 +46,7 @@ class Database
             $query->bindValue(":{$column}", $value);
         }
 
-        $query->execute();
+        return $query->execute();
     }
 
     /**
@@ -73,7 +74,7 @@ class Database
         $id = intval($id);
         $query->bindValue(':id', $id);
 
-        $query->execute();
+        return $query->execute();
     }
 
     /**
@@ -83,9 +84,10 @@ class Database
      * @param array $columns Columns to be selected
      * @param array|null $where WHERE clause
      * @param integer|null $limit LIMIT clause
+     * @param Model $modelClass Model class to append data
      * @return array Array with all results
      */
-    public function select($from, array $columns, array $where = null, $limit = null)
+    public function select($from, array $columns, array $where = null, $limit = null, Model $modelClass = null)
     {
         $columns = implode(',', $columns);
 
@@ -99,7 +101,12 @@ class Database
         }
 
         $query = self::$connection->query("SELECT {$columns} FROM {$from} {$where} {$limit}");
-        return $query->fetchAll(\PDO::FETCH_OBJ);
+
+        if ($modelClass) {
+            return $query->fetchAll(\PDO::FETCH_CLASS, get_class($modelClass));
+        } else {
+            return $query->fetchAll(\PDO::FETCH_OBJ);
+        }
     }
 
     /**

@@ -9,11 +9,11 @@
     <?php
     foreach ($posts as $post) {
     ?>
-        <tr data-id="post<?php echo $post->id;?>">
-            <td><?php echo $post->title;?></td>
+        <tr data-id="post<?php echo $post->getId();?>">
+            <td><?php echo $post->getTitle();?></td>
             <td class="btn-group">
-                <a href="/admin/posts/edit/<?php echo $post->id;?>/" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i></a>
-                <a href="#" class="delete btn btn-danger" data-id="<?php echo $post->id;?>"><i class="glyphicon glyphicon-trash"></i></a>
+                <a href="/admin/posts/edit/<?php echo $post->getId();?>/" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a href="#" class="delete btn btn-danger" data-id="<?php echo $post->getId();?>"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     <?php

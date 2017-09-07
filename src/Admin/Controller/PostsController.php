@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Library\Auth;
 use \Library\Controller;
 use Library\Database;
+use Model\Post;
 
 /**
  * Admin posts controller
@@ -29,11 +30,8 @@ class PostsController extends Controller
      */
     public function indexAction()
     {
-        $database = new Database();
-        $posts = $database->select('posts', [
-            'title',
-            'id'
-        ]);
+        $post = new Post();
+        $posts = $post->getPosts();
 
         $this->renderView('Admin/View/listposts.phtml', [
             'title' => 'Admin :: Listar posts',
@@ -56,12 +54,11 @@ class PostsController extends Controller
             $body = filter_input(\INPUT_POST, 'body', \FILTER_SANITIZE_STRING);
 
             try {
-                $database = new Database();
-                $database->insert('posts', [
-                    'title' => $title,
-                    'slug' => $slug,
-                    'body' => $body
-                ]);
+                $post = new Post();
+                $post->setTitle($title)
+                    ->setSlug($slug)
+                    ->setBody($body)
+                    ->createPost();
 
                 $params['result'] = 'Post publicado com sucesso!';
                 $params['error'] = false;
@@ -86,21 +83,16 @@ class PostsController extends Controller
         ];
 
         $getParams = $this->getParams();
-        $database = new Database();
 
         $postId = intval($getParams['id']);
-        $post = $database->select('posts', [
-            'title',
-            'slug',
-            'body'
-        ], [
-            "id = '{$postId}'"
-        ], 1);
+
+        $model = new Post();
+        $post = $model->getPostByColumn('id', $postId);
 
         if (! $post) {
             throw new \Exception('Post não encontrado');
         } else {
-            $params['post'] = $post[0];
+            $params['post'] = $post;
         }
 
         if (isset($_POST) && $_POST) {
@@ -109,11 +101,12 @@ class PostsController extends Controller
             $body = filter_input(\INPUT_POST, 'body', \FILTER_SANITIZE_STRING);
 
             try {
-                $database->update('posts', [
-                    'title' => $title,
-                    'slug' => $slug,
-                    'body' => $body
-                ], $postId);
+                $post = new Post();
+                $post->setTitle($title)
+                    ->setSlug($slug)
+                    ->setBody($body)
+                    ->setId($postId)
+                    ->updatePost();
 
                 $params['result'] = 'Post atualizado com sucesso!';
                 $params['error'] = false;
@@ -136,10 +129,9 @@ class PostsController extends Controller
         $id = $this->getParam('id');
 
         try {
-            $database = new Database();
-            $database->delete('posts', [
-                "id = '{$id}'"
-            ], 1);
+            $post = new Post();
+            $post->setId($id)
+                ->deletePost();
 
             $result = [
                 'error' => false,
