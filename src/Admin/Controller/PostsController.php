@@ -55,13 +55,21 @@ class PostsController extends Controller
 
             try {
                 $post = new Post();
-                $post->setTitle($title)
+                $insert = $post->setTitle($title)
                     ->setSlug($slug)
                     ->setBody($body)
                     ->createPost();
 
-                $params['result'] = 'Post publicado com sucesso!';
-                $params['error'] = false;
+                if (true !== $insert) {
+                    $params['error'] = true;
+                    if (is_array($insert)) {
+                        $params['result'] = implode('<br>', $insert['errors']);
+                    }
+                    $params['post'] = $post;
+                } else {
+                    $params['result'] = 'Post publicado com sucesso!';
+                    $params['error'] = false;
+                }
             } catch (\Exception $e) {
                 $params['result'] = 'Erro ao publicar post: ' . $e->getMessage();
                 $params['error'] = true;
@@ -103,15 +111,23 @@ class PostsController extends Controller
 
             try {
                 $post = new Post();
-                $post->setTitle($title)
+                $update = $post->setTitle($title)
                     ->setSlug($slug)
                     ->setBody($body)
                     ->setId($postId)
                     ->updatePost();
 
-                $params['result'] = 'Post atualizado com sucesso!';
-                $params['error'] = false;
-                $params['post'] = $post;
+
+                if (true !== $update) {
+                    $params['error'] = true;
+                    if (is_array($update)) {
+                        $params['result'] = implode('<br>', $update['errors']);
+                    }
+                } else {
+                    $params['result'] = 'Post atualizado com sucesso!';
+                    $params['error'] = false;
+                    $params['post'] = $post;
+                }
             } catch (\Exception $e) {
                 $params['result'] = 'Erro ao atualizar post: ' . $e->getMessage();
                 $params['error'] = true;

@@ -179,29 +179,40 @@ class Post extends Model
     /**
      * Create a new post
      *
-     * @return bool
+     * @return bool|array
      */
     public function createPost()
     {
-        return $this->database->insert('posts', [
-            'title' => $this->getTitle(),
-            'slug' => $this->getSlug(),
-            'body' => $this->getBody()
-        ]);
+        $validate = $this->validate();
+        if ($validate['valid']) {
+            return $this->database->insert('posts', [
+                'title' => $this->getTitle(),
+                'slug' => $this->getSlug(),
+                'body' => $this->getBody()
+            ]);
+        } else {
+            return $validate;
+        }
     }
 
     /**
      * Updates an existing post
      *
-     * @return bool
+     * @return bool|array
      */
     public function updatePost()
     {
-        return $this->database->update('posts', [
-            'title' => $this->getTitle(),
-            'slug' => $this->getSlug(),
-            'body' => $this->getBody()
-        ], $this->getId());
+        $validate = $this->validate();
+
+        if ($validate['valid']) {
+            return $this->database->update('posts', [
+                'title' => $this->getTitle(),
+                'slug' => $this->getSlug(),
+                'body' => $this->getBody()
+            ], $this->getId());
+        } else {
+            return $validate;
+        }
     }
 
     /**
@@ -216,5 +227,52 @@ class Post extends Model
         return $this->database->delete('posts', [
             "id = {$id}"
         ], 1);
+    }
+
+    /**
+     * Verify if all fields are ok to be inserted on database
+     *
+     * @return array
+     */
+    private function validate()
+    {
+        $result = [
+            'valid' => true,
+            'errors' => []
+        ];
+
+        if (! $this->getTitle()) {
+            $result['errors'][] = 'O campo "Título" é obrigatório';
+        } elseif (strlen($this->getTitle()) > 128) {
+            $result['errors'][] = 'O campo "Título" deve ter no máximo 128 caracteres';
+        }
+
+        if (! $this->getSlug()) {
+            $result['errors'][] = 'O campo "URL" é obrigatório';
+        } elseif (strlen($this->getSlug()) > 255) {
+            $result['errors'][] = 'O campo "URL" deve ter no máximo 255 caracteres';
+        } elseif (! $this->getId()) {
+            $existingPostURL = $this->getPostByColumn('slug', $this->getSlug());
+
+            if ($existingPostURL) {
+                $result['errors'][] = 'Já existe um post com essa URL.';
+            }
+
+            $existingPostTitle = $this->getPostByColumn('title', $this->getTitle());
+
+            if ($existingPostTitle) {
+                $result['errors'][] = 'Já existe um post com esse título.';
+            }
+        }
+
+        if (! $this->getBody()) {
+            $result['errors'][] = 'O campo "Conteúdo" é obrigatório';
+        }
+
+        if ($result['errors']) {
+            $result['valid'] = false;
+        }
+
+        return $result;
     }
 }
